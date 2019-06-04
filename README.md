@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/36700d8e-caf7-4a4a-89e6-e4d40f04e70e/deploy-status)](https://app.netlify.com/sites/reverent-feynman-a63bd6/deploys)
+
 # Movie Docs
 
 Esse é um aplicativo para busca de filmes

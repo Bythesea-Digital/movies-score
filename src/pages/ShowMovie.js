@@ -31,7 +31,7 @@ class ShowMovie extends React.Component {
             <div className="media">
               <div className="media-left">
                 <figure className="image">
-                  <img src={get(movieInfo, 'Poster', 'https://via.placeholder.com/300x420?text=Imagem+Não+Encontrada')}
+                  <img src={get(movieInfo, 'Poster', 'https://via.placeholder.com/300x420?text=Image+not+found')}
                        alt={get(movieInfo, 'Title', 'Not found')}/>
                 </figure>
               </div>
@@ -49,7 +49,7 @@ class ShowMovie extends React.Component {
           <div className="card-footer">
             <div className="card-footer-item">
               <div className="tags has-addons">
-                <span className="tag">Média de Rating</span>
+                <span className="tag">Average Score</span>
                 <span
                   className={`tag is-${rating >= 60 ? 'success' : 'warning'}`}>{rating}</span>
               </div>
@@ -58,7 +58,7 @@ class ShowMovie extends React.Component {
               <span className="tag is-info">{get(movieInfo, 'Type')}</span>
             </div>
             <div className="card-footer-item">
-              <Link className="button is-link is-outlined" to={`/`}>Voltar</Link>
+              <Link className="button is-link is-outlined" to={`/`}>Go back</Link>
             </div>
           </div>
         </div>
