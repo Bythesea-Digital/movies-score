@@ -86,6 +86,7 @@ class Movies extends Component {
   };
 
   render() {
+    const {searched, title} = this.state;
     const moviesTile = this.props.movies.map((movie, index) => (
       <MovieTile key={index} movieInfo={movie} isList={true}/>
     ));
@@ -117,7 +118,7 @@ class Movies extends Component {
                     <div className="field is-grouped">
                       <p className="control is-expanded">
                         <input name="title" onChange={this.onChange} className="input" type="text"
-                               placeholder="Movie name"/>
+                               placeholder="Movie or TV series name"/>
                       </p>
                       <p className="control is-expanded">
                         <input name="year" onChange={this.onChange} className="input" type="number" placeholder="Year"/>
@@ -126,7 +127,7 @@ class Movies extends Component {
 
                       </p>
                       <p className="control">
-                        <button onClick={this.getMovies} type="submit" className="button is-info">
+                        <button disabled={!title} onClick={this.getMovies} type="submit" className="button is-info">
                           Search
                         </button>
                       </p>
@@ -136,13 +137,14 @@ class Movies extends Component {
 
                 </div>
 
-                {this.state.searched && this.renderFilters()}
+                {searched && this.props.movies.length ? this.renderFilters() : ''}
 
                 {/* <progress style={{borderRadius: 0}} class="progress is-small is-primary" max="100">15%</progress> */}
               </div>
             </div>
           </div>
           {moviesTile}
+          {!this.props.movies.length && searched && <p className="has-text-centered">No movies or TV series found</p>}
         </div>
       </section>
     );
