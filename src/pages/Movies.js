@@ -8,16 +8,15 @@ import MovieTile from "../components/MovieTile";
 import { get } from 'lodash';
 
 class Movies extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: 'bird box',
+
+    state = {
+      title: '',
       year: '',
       order_title: 'select',
       order_rating: 'select',
       searched: false
-    }
-  }
+    };
+
 
   onChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
@@ -45,7 +44,7 @@ class Movies extends Component {
 
   getMovies = (e) => {
     e.preventDefault();
-    this.setState({ searched: true })
+    this.setState({ searched: true });
     const s = this.state.title;
     const y = this.state.year;
     this.props.fetchMovies(s, y)
@@ -57,7 +56,7 @@ class Movies extends Component {
       <div className="card-footer animated fadeIn">
         <div className="card-footer-item">
           <div className="tags has-addons ">
-            <span className="tag">Termo de Busca</span>
+            <span className="tag">You searched for:</span>
             <span className="tag is-primary">{this.state.title} {get(this.state, 'year', '')}</span>
           </div>
         </div>
@@ -65,18 +64,18 @@ class Movies extends Component {
         <div className="card-footer-item">
           <div className="select ">
             <select onChange={this.filterOnChange} value={this.state.order_title} name="order">
-              <option value="select">Ordenar por Título</option>
-              <option value="titulo_asc">Crescente</option>
-              <option value="titulo_desc">Decrescente</option>
+              <option value="select">Order by Title</option>
+              <option value="titulo_asc">A-Z</option>
+              <option value="titulo_desc">Z-A</option>
             </select>
           </div>
         </div>
         <div className="card-footer-item">
           <div className="select ">
             <select onChange={this.filterOnChange} value={this.state.order_title} name="order">
-              <option value="select">Ordenar por Rating</option>
-              <option value="rating_asc">Menor Primeiro</option>
-              <option value="rating_desc">Maior primeiro</option>
+              <option value="select">Order by rating</option>
+              <option value="rating_asc">Worst first</option>
+              <option value="rating_desc">Best first</option>
             </select>
           </div>
         </div>
@@ -96,31 +95,39 @@ class Movies extends Component {
         <div className="container">
           <div className="columns">
             <div className="column is-10 is-offset-1">
+
               <div className="card animated fadeIn">
                 <div className="card-header">
                   <h1 className="card-header-title">
-                    Movies
+                    <span className="has-margin" style={{marginRight: 10}}>Movies by Felipe Lobo</span>
+                    <div className="control">
+                      <div className="tags has-addons">
+                        <a href="https://github.com/wolfmaster8/movies-score" target="_blank" className="tag is-primary">{process.env.REACT_APP_VERSION}</a>
+                      </div>
+                    </div>
                   </h1>
+
                 </div>
                 <div className="card-content">
                   <p className="subtitle">
-                    Bem-vindo ao <strong>Movies</strong>!
+                    Welcome to <strong>Movies</strong>!
                   </p>
+                  <p className="subtitle is-6">I'll calculate the average score based on IMDB, Rotten Tomatoes and Metacritic. <br/> Start by typing the name of your favourite movie</p>
                   <form>
                     <div className="field is-grouped">
                       <p className="control is-expanded">
                         <input name="title" onChange={this.onChange} className="input" type="text"
-                               placeholder="Nome do filme"/>
+                               placeholder="Movie name"/>
                       </p>
                       <p className="control is-expanded">
-                        <input name="year" onChange={this.onChange} className="input" type="number" placeholder="Ano"/>
+                        <input name="year" onChange={this.onChange} className="input" type="number" placeholder="Year"/>
                       </p>
                       <p className="control is-expanded">
 
                       </p>
                       <p className="control">
                         <button onClick={this.getMovies} type="submit" className="button is-info">
-                          Busca
+                          Search
                         </button>
                       </p>
                     </div>

@@ -24,7 +24,7 @@ class MovieTile extends React.Component {
             <div className="media">
               <div className="media-left">
                 <figure className="image">
-                  <img width="200px" src={get(movieInfo, 'Poster', 'https://via.placeholder.com/300x420?text=Imagem+Não+Encontrada')}
+                  <img width="200px" src={get(movieInfo, 'Poster', 'https://via.placeholder.com/300x420?text=Image+not+found')}
                        alt={get(movieInfo, 'Title', 'Not found')}/>
                 </figure>
               </div>
@@ -39,7 +39,7 @@ class MovieTile extends React.Component {
           <div className="card-footer">
             <div className="card-footer-item">
               <div className="tags has-addons">
-                <span className="tag">Média de Rating</span>
+                <span className="tag">Average Score</span>
                 <span
                   className={`tag is-${movieInfo.OverallRating >= 60 ? 'success' : 'warning'}`}>{get(movieInfo, 'OverallRating', '-')}</span>
               </div>
@@ -48,7 +48,7 @@ class MovieTile extends React.Component {
               <span className="tag is-info">{get(movieInfo, 'Type')}</span>
             </div>
             <div className="card-footer-item">
-              <Link className="button is-primary" to={`/movie/${get(movieInfo, 'imdbID')}`}>Mais Informação</Link>
+              <Link className="button is-primary" to={`/movie/${get(movieInfo, 'imdbID')}`}>More</Link>
             </div>
           </div>
         </div>
