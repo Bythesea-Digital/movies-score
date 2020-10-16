@@ -1,7 +1,7 @@
 import React from 'react';
 import './assets/bulma.min.css';
 import './assets/animate.css';
-import BrowserRouter from "react-router-dom/es/BrowserRouter";
+import {BrowserRouter} from "react-router-dom";
 import { Route, Switch} from "react-router-dom";
 import * as pages from "./pages";
 import { Provider } from 'react-redux';

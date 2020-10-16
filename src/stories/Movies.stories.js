@@ -4,7 +4,7 @@ import Provider from "./Provider";
 import MovieTile from "../components/MovieTile";
 
 storiesOf('Information/MovieTile', module)
-  .addDecorator(story => <Provider story={story()} />
+  .addDecorator(story => <Provider story={story()} />)
   .add('Without Image', () => {
     const movie = {
       Title: "Bird in a Box",
@@ -29,4 +29,4 @@ storiesOf('Information/MovieTile', module)
     return (
       <MovieTile movieInfo={movie}/>
     )
-  }));
+  });

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import { fetchMovies, getRatings } from "../actions/movieAction";
+// import { fetchMovies, getRatings } from "../actions/movieAction";
 import { orderMovies } from "../actions/filterAction";
 import PropTypes from 'prop-types'
 import MovieTile from "../components/MovieTile";
