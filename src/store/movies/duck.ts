@@ -1,74 +1,65 @@
-import {createActions, createReducer} from 'reduxsauce';
+import { createActions, createReducer } from "reduxsauce";
+
+export type SearchType = {
+  searchTerm: string;
+  year: string;
+};
+
+export type MoviesCreators = {
+  startSearch: string;
+};
 
 export const { Types, Creators } = createActions({
-    startSearch: ['searchTerm']
-})
-/*export enum Types {
-    SEARCH_START = 'SEARCH_START',
-    SEARCH_SUCCESS = 'SEARCH_SUCCESS',
-    SEARCH_ERROR = 'SEARCH_ERROR',
-}*/
+  startSearch: ["searchTerm", "year"],
+  searchSuccess: ["movies"]
+});
+
+export type Rating = {
+  imdb: number;
+  rottenTomatoes: number;
+  metacritic: number;
+  total: number;
+};
 
 export type Movie = {
-    title: string;
-    year: string;
-    imdbId: string;
-    type: string;
-    poster: string;
-    rating : {
-        imdb: number;
-        rottenTomatoes: number;
-        total: number
-    }
-}
+  title: string;
+  year: string;
+  imdbId: string;
+  type: string;
+  poster: string;
+  rating: {};
+};
 
-enum AppState {
-    FETCHING= 'FETCHING',
-    SUCCESS ='SUCCESS',
-    ERROR= 'ERROR'
+export enum AppState {
+  FETCHING = "FETCHING",
+  SUCCESS = "SUCCESS",
+  ERROR = "ERROR"
 }
 
 interface MoviesInitialState {
-    appState: null | keyof typeof AppState,
-    moviesList: Movie[],
-    selectedMovie: Movie
+  appState: null | keyof typeof AppState;
+  moviesList: Movie[];
+  selectedMovie: Movie;
 }
-
 
 const initialState: MoviesInitialState = {
-    appState: null,
-    moviesList: [] as Movie[],
-    selectedMovie: {} as Movie
-}
+  appState: null,
+  moviesList: [] as Movie[],
+  selectedMovie: {} as Movie
+};
 
-const start = (state: typeof initialState = initialState, action) => ({
-    ...state, appState: AppState.FETCHING
-})
+const start = (state: typeof initialState = initialState) => ({
+  ...state,
+  appState: AppState.FETCHING
+});
 
-/*export default (state: typeof initialState = initialState, action: Action): typeof initialState => {
-    switch (action.type){
-        case Types.SEARCH_START:
-            return {...state, state: AppState.FETCHING}
-        default:
-            return state
-    }
-}*/
-
-/*
-export type StartFetching = {
-    searchTerm: string;
-}
-
-export const startFetching = ({searchTerm}: StartFetching) => ({
-    type: Types.SEARCH_START,
-    payload: searchTerm
-} as const)
-
-type Action = ReturnType<
-    | typeof startFetching
-    >
-*/
+const success = (state: typeof initialState = initialState, action) => ({
+  ...state,
+  appState: AppState.SUCCESS,
+  moviesList: action.movies
+});
 
 export default createReducer(initialState, {
-    [Types.START_SEARCH]: start,
-})
+  [Types.START_SEARCH]: start,
+  [Types.SEARCH_SUCCESS]: success
+});
