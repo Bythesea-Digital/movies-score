@@ -4,7 +4,7 @@ import {APP_VERSION} from "../../helpers/consts";
 import {Container, Header} from "./styles";
 import SearchBar from "./components/SearchBar";
 import MovieCard from "./components/MovieCard";
-import {motion} from "framer-motion"
+import {AnimatePresence, motion} from "framer-motion"
 
 
 type Props = {
@@ -12,81 +12,102 @@ type Props = {
     appState: keyof typeof AppState;
 };
 
-export default function Movies({movies, appState}: Props): JSX.Element {
-    const isFetching = appState === AppState.FETCHING
-    const hasMovies = movies.length || isFetching;
+export const fatherVariants = {
+    hidden: {
+        opacity: 0,
+        translateY: 100,
+    },
+    visible: {
+        opacity: 1,
+        translateY: 0,
+        transition: {
+            type: 'spring',
+            // mass: 1,
+            // damping: 5.2,
+            staggerChildren: 0.07,
+            delayChildren: 0.2,
+            // stiffness: 100
+        }
+    },
+    exit: {
+        opacity: 0,
+    }
+}
 
-    const variants = {
-        hidden: {
-            opacity: 0,
-            translateY: 100,
-        },
-        visible: {
-            opacity: 1,
-            translateY: 0,
-            transition: {
-                type: 'spring',
-                staggerChildren: 0.1,
-                delayChildren: 2
+export const childrenVariants = {
+    hidden: {
+        y: 50,
+        opacity: 0,
+        transition: {
+            y: {
+                stiffness: 1000,
             }
         }
+    },
+    visible: {
+        y: 0,
+        opacity: 1,
+        transition: {
+            y: {
+                stiffness: 1000,
+                velocity: -100
+            }
+        }
+    },
+    exit: {
+        opacity: 0,
+        y: 50
     }
+}
 
+export default function Movies({movies, appState}: Props): JSX.Element {
+    const isFetching = appState === AppState.FETCHING
+    const isError = appState === AppState.ERROR;
     const renderMoviesSkeleton = (
-        <Container>
-            <MovieCard key={0} title="" year="" imdbId="" type="" poster="" rating="" loading={true}/>
-            <MovieCard key={1} title="" year="" imdbId="" type="" poster="" rating="" loading={true}/>
-            <MovieCard key={2} title="" year="" imdbId="" type="" poster="" rating="" loading={true}/>
-        </Container>
+        <motion.div variants={fatherVariants} initial="hidden" animate="visible" exit="exit">
+            <Container>
+                <MovieCard key={0} title="" year="" imdbId="" type="" poster="" rating="" loading={true}/>
+                <MovieCard key={1} title="" year="" imdbId="" type="" poster="" rating="" loading={true}/>
+                <MovieCard key={2} title="" year="" imdbId="" type="" poster="" rating="" loading={true}/>
+            </Container>
+        </motion.div>
     )
     return (
         <>
-            <Header haveMovies={hasMovies}>
-                <motion.div variants={variants} initial="hidden" animate="visible">
-                    <span className="app-version">{APP_VERSION}</span>
-                    <h1 className="title">GoMovies</h1>
-                    <p className="subtitle">
+            <Header>
+                <motion.div variants={fatherVariants} initial="hidden" animate="visible">
+                    <motion.span variants={childrenVariants} className="app-version">{APP_VERSION}</motion.span>
+                    <motion.h1 variants={childrenVariants} className="title">GoMovies</motion.h1>
+                    <motion.p variants={childrenVariants} className="subtitle">
                         Search for your favourite movie or show!
-                    </p>
-                    <SearchBar/>
+                    </motion.p>
+                    <motion.div variants={childrenVariants}>
+                        <SearchBar/>
+                    </motion.div>
+                {isError ? <p className="error">Not found!</p> : null}
                 </motion.div>
+                {isFetching ? renderMoviesSkeleton : null}
+                <AnimatePresence>
+                    {movies.length ? (
+                        <motion.div variants={fatherVariants} initial="hidden" animate="visible" exit="exit">
+                            <Container>
+                                {movies.map(movie => (
+                                    <MovieCard
+                                        key={movie.imdbId}
+                                        title={movie.title}
+                                        year={movie.year}
+                                        imdbId={movie.imdbId}
+                                        type={movie.imdbId}
+                                        poster={movie.poster}
+                                        rating={movie.rating}
+                                    />
+                                ))}
+
+                            </Container>
+                        </motion.div>
+                    ) : null}
+                </AnimatePresence>
             </Header>
-            {isFetching ? renderMoviesSkeleton : null}
-            {movies.length ? (
-                <Container>
-                    {movies.map(movie => (
-                        <MovieCard
-                            key={movie.imdbId}
-                            title={movie.title}
-                            year={movie.year}
-                            imdbId={movie.imdbId}
-                            type={movie.imdbId}
-                            poster={movie.poster}
-                            rating={movie.rating}
-                        />
-                    ))}
-                </Container>
-            ) : null}
-
-            {/*<section className="hero is-medium is-primary is-bold">
-            <div className="hero-body">
-                <div className="container">
-                    <span className="tag is-rounded">{APP_VERSION}</span>
-                    <h1 className="title">
-                        GoMovie
-                    </h1>
-                    <h2 className="subtitle">
-                        Search for your favourite movie and view its score!
-                    </h2>
-                    <div className="level">
-                        <div className="level-left">
-                            <input type="text" className="input is-rounded"/>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>*/}
         </>
     );
 }

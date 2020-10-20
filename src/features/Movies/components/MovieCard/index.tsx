@@ -2,6 +2,8 @@ import React from "react";
 import { Movie } from "../../../../store/movies/duck";
 import { Card } from "./styles";
 import Skeleton from "react-loading-skeleton";
+import {motion} from "framer-motion"
+import {childrenVariants} from "../../Movies";
 
 type Props = {
   loading?: boolean
@@ -31,10 +33,12 @@ export default function MovieCard({
     }
   }
   return (
-    <Card>
-      <h2>{loading ? <Skeleton width={180} /> : title}</h2>
-      <p>{loading ? <Skeleton width={48} /> : year}</p>
-      {loading ? <Skeleton width={300} height={400} /> : renderImage()}
-    </Card>
+    <motion.div key={imdbId} variants={childrenVariants} exit="exit">
+      <Card>
+        <h2>{loading ? <Skeleton width={180} /> : title}</h2>
+        <p>{loading ? <Skeleton width={48} /> : year}</p>
+        {loading ? <Skeleton width={300} height={400} /> : renderImage()}
+      </Card>
+    </motion.div>
   );
 }

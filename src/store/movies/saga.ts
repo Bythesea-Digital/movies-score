@@ -11,7 +11,7 @@ import api from "../../services/api";
 
 function* searchMovies({ searchTerm: { searchTerm, year } }) {
   try {
-    console.log("sagaaa", searchTerm, year);
+    yield put(MoviesActions.cleanMovies())
     const response = yield call(api.get, "", {
       params: {
         s: searchTerm,
@@ -23,12 +23,17 @@ function* searchMovies({ searchTerm: { searchTerm, year } }) {
     /* const formattedMovies = yield all(
       formatMovies({ apiResponse: response.data.Search })
     );*/
+    if(response.data.Error){
+      yield put(MoviesActions.searchError())
+    }else{
+      const formattedMovies = yield call(formatMovies, {
+        apiResponse: response.data.Search
+      });
+      console.log("formattedMovies", formattedMovies);
+      yield put(MoviesActions.searchSuccess(formattedMovies));
+    }
 
-    const formattedMovies = yield call(formatMovies, {
-      apiResponse: response.data.Search
-    });
-    console.log("formattedMovies", formattedMovies);
-    yield put(MoviesActions.searchSuccess(formattedMovies));
+
   } catch (e) {
     console.log(e);
   }
