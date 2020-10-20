@@ -4,9 +4,10 @@ export const SearchContainer = styled.div`
   //background: #1d72aa;
   display: flex;
   justify-content: center;
-  position: relative;
-  top: -32px;
+  //position: relative;
+  //top: -32px;
   z-index: 9;
+  margin-top: 48px;
 `;
 
 export const SearchInput = styled.input`
