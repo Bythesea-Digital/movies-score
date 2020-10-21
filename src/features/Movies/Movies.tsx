@@ -21,8 +21,8 @@ export const fatherVariants = {
     translateY: 0,
     transition: {
       type: "spring",
-      // duration: 5
-      // velocity: 100
+      // duration: 5 //tween
+      // velocity: 100 // inertia
       mass: 1,
       damping: 5.2,
       staggerChildren: 0.07,
