@@ -63,7 +63,7 @@ const success = (state: typeof initialState = initialState, action) => ({
 
 const cleanMovies = (state: typeof initialState = initialState) => ({
   ...state,
-  appState: AppState.SUCCESS,
+  appState: AppState.FETCHING,
   moviesList: [] as Movie[]
 });
 
