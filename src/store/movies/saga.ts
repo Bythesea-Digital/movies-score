@@ -38,7 +38,7 @@ function* formatMovies({ apiResponse }) {
         title: movies.Title,
         year: movies.Year,
         imdbId: movies.imdbID,
-        poster: movies.Poster,
+        poster: movies.Poster === "N/A" ? 'https://via.placeholder.com/300x380?text=Image+not+found' : movies.Poster,
         type: movies.Type,
         rating: {
           imdb: 0,
