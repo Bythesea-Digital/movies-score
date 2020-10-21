@@ -1,39 +1,26 @@
 import { takeLatest, call, put, all } from "redux-saga/effects";
-import {
-  Types as MoviesTypes,
-  Creators as MoviesActions,
-  SearchType,
-  Movie
-} from "./duck";
+import { Types as MoviesTypes, Creators as MoviesActions } from "./duck";
 import { get } from "lodash";
 
 import api from "../../services/api";
 
 function* searchMovies({ searchTerm: { searchTerm, year } }) {
   try {
-    yield put(MoviesActions.cleanMovies())
+    yield put(MoviesActions.cleanMovies());
     const response = yield call(api.get, "", {
       params: {
         s: searchTerm,
         y: year
       }
     });
-    console.log(response);
-
-    /* const formattedMovies = yield all(
-      formatMovies({ apiResponse: response.data.Search })
-    );*/
-    if(response.data.Error){
-      yield put(MoviesActions.searchError())
-    }else{
+    if (response.data.Error) {
+      yield put(MoviesActions.searchError());
+    } else {
       const formattedMovies = yield call(formatMovies, {
         apiResponse: response.data.Search
       });
-      console.log("formattedMovies", formattedMovies);
       yield put(MoviesActions.searchSuccess(formattedMovies));
     }
-
-
   } catch (e) {
     console.log(e);
   }
@@ -43,11 +30,10 @@ function* formatMovies({ apiResponse }) {
   const movies = yield all(
     apiResponse.map(movies => {
       // const response = getRatings({ imdbId: movies.imdbID });
-      const response: any = call(getRatings, {
+      /*const response: any = call(getRatings, {
         imdbId: movies.imdbID
-      });
+      });*/
 
-      console.log("--", response.value);
       return {
         title: movies.Title,
         year: movies.Year,
@@ -63,7 +49,6 @@ function* formatMovies({ apiResponse }) {
       };
     })
   );
-  console.log("movies", movies);
   return movies;
 }
 

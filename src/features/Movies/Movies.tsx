@@ -1,10 +1,10 @@
 import React from "react";
-import { AppState, SearchType, Movie } from "../../store/movies/duck";
+import { AppState, Movie } from "../../store/movies/duck";
 import { APP_VERSION } from "../../helpers/consts";
 import { Container, Header } from "./styles";
 import SearchBar from "./components/SearchBar";
 import MovieCard from "./components/MovieCard";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 type Props = {
   movies: Movie[];
@@ -21,50 +21,33 @@ export const fatherVariants = {
     translateY: 0,
     transition: {
       type: "spring",
+      // duration: 5
+      // velocity: 100
       mass: 1,
       damping: 5.2,
       staggerChildren: 0.07,
       delayChildren: 0.2
-      // stiffness: 10
     }
-  },
-  exit: {
-    opacity: 0
   }
 };
 
 export const childrenVariants = {
   hidden: {
     y: 50,
-    opacity: 0,
-    transition: {
-      y: {
-        // stiffness: 1000
-      }
-    }
+    opacity: 0
   },
   visible: {
     y: 0,
-    opacity: 1,
-    transition: {
-      y: {
-        // stiffness: 1000,
-        // velocity: -100
-      }
-    }
+    opacity: 1
   }
 };
 
 export default function Movies({ movies, appState }: Props): JSX.Element {
   const isFetching = appState === AppState.FETCHING;
   const isError = appState === AppState.ERROR;
+
   const renderMoviesSkeleton = (
-    <motion.div
-      variants={fatherVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-    >
+    <motion.div variants={fatherVariants} initial="hidden" animate="visible">
       <Container>
         <MovieCard
           key={0}
@@ -119,33 +102,34 @@ export default function Movies({ movies, appState }: Props): JSX.Element {
           <motion.div variants={childrenVariants}>
             <SearchBar />
           </motion.div>
-          {isError ? <p className="error">Not found!</p> : null}
+          {isError ? (
+            <motion.p variants={fatherVariants} className="error">
+              Not found!
+            </motion.p>
+          ) : null}
         </motion.div>
         {isFetching ? renderMoviesSkeleton : null}
-        <AnimatePresence>
-          {movies.length ? (
-            <motion.div
-              variants={fatherVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-            >
-              <Container>
-                {movies.map(movie => (
-                  <MovieCard
-                    key={movie.imdbId}
-                    title={movie.title}
-                    year={movie.year}
-                    imdbId={movie.imdbId}
-                    type={movie.imdbId}
-                    poster={movie.poster}
-                    rating={movie.rating}
-                  />
-                ))}
-              </Container>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
+        {movies.length ? (
+          <motion.div
+            variants={fatherVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <Container>
+              {movies.map(movie => (
+                <MovieCard
+                  key={movie.imdbId}
+                  title={movie.title}
+                  year={movie.year}
+                  imdbId={movie.imdbId}
+                  type={movie.imdbId}
+                  poster={movie.poster}
+                  rating={movie.rating}
+                />
+              ))}
+            </Container>
+          </motion.div>
+        ) : null}
       </Header>
     </>
   );

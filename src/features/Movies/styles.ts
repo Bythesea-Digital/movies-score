@@ -1,18 +1,15 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  //background: #f0f4f8;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  //position: relative;
-  //top: -54px;
   padding-top: 48px;
 `;
 
 type HeaderType = {
-    haveMovies: boolean
-}
+  haveMovies: boolean;
+};
 
 export const Header = styled.header<HeaderType>`
   background: #102a43;
@@ -34,8 +31,8 @@ export const Header = styled.header<HeaderType>`
   .subtitle {
     color: white;
   }
-  .error{
-    color: red;
+  .error {
+    color: #e66a6a;
     padding: 24px 0;
   }
 `;
