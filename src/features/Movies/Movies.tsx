@@ -73,6 +73,7 @@ export default function Movies({movies, appState}: Props): JSX.Element {
                     </motion.div>
                     {isError ? (
                         <motion.p className="error">
+                            <p>No shows nor movies found!</p>
                             <img src={NotFoundHand} alt="Not found"/>
                         </motion.p>
                     ) : null}

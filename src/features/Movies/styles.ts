@@ -40,5 +40,11 @@ background-image: ${({ theme }) => theme.background };
   
  @media screen and (max-width: 768px){
     padding: 80px 24px;
+    
+    .error{
+    img{
+      width: 320px;
+    }
+    }
   }
 `;
