@@ -1,6 +1,5 @@
 import { takeLatest, call, put, all } from "redux-saga/effects";
 import { Types as MoviesTypes, Creators as MoviesActions } from "./duck";
-import { get } from "lodash";
 
 import api from "../../services/api";
 
@@ -52,7 +51,7 @@ function* formatMovies({ apiResponse }) {
   return movies;
 }
 
-function* getRatings({ imdbId }): any {
+/*function* getRatings({ imdbId }): any {
   try {
     const response = yield call(api.get, "", {
       params: {
@@ -89,7 +88,7 @@ function* getRatings({ imdbId }): any {
     console.log(total);
     return { imdb, rottenTomatoes, metacritic, total };
   } catch (e) {}
-}
+}*/
 
 export default [
   // @ts-ignore

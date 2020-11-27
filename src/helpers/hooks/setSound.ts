@@ -12,7 +12,7 @@ const useAudio = ({soundUrl}) => {
         }else{
             audio.pause()
         }
-    }, [isPlaying])
+    }, [isPlaying, audio])
 
     useEffect(() => {
         audio.addEventListener('ended', () => setPlaying(false))
@@ -21,7 +21,7 @@ const useAudio = ({soundUrl}) => {
         }
     }, [])
 
-    return [isPlaying, toggleSound] as const
+    return [toggleSound] as const
 }
 
 export default useAudio

@@ -1,4 +1,4 @@
-import { Creators as MoviesActions, Movie, Rating, SearchType } from "./duck";
+import { Creators as MoviesActions, Movie, SearchType } from "./duck";
 import { get } from "lodash";
 import api from "../../services/api";
 
@@ -60,7 +60,7 @@ const getRatings = async ({ imdbId }): Promise<any> => {
     let rottenTomatoes;
     let metacritic;
 
-    ratings.map(rating => {
+    ratings.forEach(rating => {
       switch (rating.Source) {
         case "Internet Movie Database":
           imdb = rating.Value;
@@ -85,4 +85,4 @@ const getRatings = async ({ imdbId }): Promise<any> => {
   } catch (e) {}
 };
 
-function getTotalRating({ imdb, rottenTomatoes }) {}
+// function getTotalRating({ imdb, rottenTomatoes }) {}

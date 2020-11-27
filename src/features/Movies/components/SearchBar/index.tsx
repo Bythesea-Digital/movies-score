@@ -4,7 +4,6 @@ import {
   Creators as MoviesActions,
   SearchType
 } from "../../../../store/movies/duck";
-import { searchMovies } from "../../../../store/movies/thunk";
 
 const mapStateToProps = state => ({
   appState: state.movies.appState
