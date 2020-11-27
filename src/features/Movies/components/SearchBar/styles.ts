@@ -28,6 +28,10 @@ export const SearchInput = styled.input`
     outline: unset;
     box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.18);
   }
+  @media screen and (max-width: 768px){
+    width: 100%;
+    margin-bottom: 16px;
+  }
 `;
 
 export const Button = styled.button`
@@ -53,5 +57,8 @@ export const Button = styled.button`
     color: #9fb3c8;
     cursor: not-allowed;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  @media screen and (max-width: 768px){
+    width: 100%;
   }
 `;

@@ -37,4 +37,8 @@ background-image: ${({ theme }) => theme.background };
     color: #e66a6a;
     padding: 24px 0;
   }
+  
+ @media screen and (max-width: 768px){
+    padding: 80px 24px;
+  }
 `;

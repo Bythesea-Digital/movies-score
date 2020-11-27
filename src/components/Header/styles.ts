@@ -20,6 +20,7 @@ export const HeaderMenu = styled.nav`
     border-radius: 0 ;
     width: 100vw;
     margin: 0;
+    padding: 0 24px;
   }
   
 `
