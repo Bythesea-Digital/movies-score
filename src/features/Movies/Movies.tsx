@@ -1,10 +1,11 @@
 import React from "react";
 import {AppState, Movie} from "../../store/movies/duck";
 import {APP_VERSION} from "../../helpers/consts";
-import {Container, Header} from "./styles";
+import {CardsContainer, Container} from "./styles";
 import SearchBar from "./components/SearchBar";
 import MovieCard from "./components/MovieCard";
 import {motion} from 'framer-motion';
+import NotFoundHand from "../../assets/hands/not-found.png";
 
 type Props = {
     movies: Movie[];
@@ -47,17 +48,16 @@ export default function Movies({movies, appState}: Props): JSX.Element {
 
     const renderMovieSkeleton = (
         <motion.div variants={fatherVariants} initial="hidden" animate="visible">
-            <Container>
+            <CardsContainer>
                 <MovieCard key={0} title="" year="" imdbId="" type="" poster="" rating="" loading={true}/>
                 <MovieCard key={1} title="" year="" imdbId="" type="" poster="" rating="" loading={true}/>
                 <MovieCard key={2} title="" year="" imdbId="" type="" poster="" rating="" loading={true}/>
-            </Container>
+            </CardsContainer>
         </motion.div>
     )
 
     return (
-        <>
-            <Header>
+            <Container>
                 <motion.div variants={fatherVariants} initial="hidden" animate="visible">
                     <motion.span variants={childrenVariants} className="app-version">
                         {APP_VERSION}
@@ -73,7 +73,7 @@ export default function Movies({movies, appState}: Props): JSX.Element {
                     </motion.div>
                     {isError ? (
                         <motion.p className="error">
-                            Not found!
+                            <img src={NotFoundHand} alt="Not found"/>
                         </motion.p>
                     ) : null}
                 </motion.div>
@@ -82,7 +82,7 @@ export default function Movies({movies, appState}: Props): JSX.Element {
                 {isFetching ? renderMovieSkeleton : null}
                 {movies.length ? (
                     <motion.div variants={fatherVariants} initial="hidden" animate="visible">
-                        <Container>
+                        <CardsContainer>
                             {movies.map(movie => (
                                 <MovieCard
                                     key={movie.imdbId}
@@ -94,10 +94,9 @@ export default function Movies({movies, appState}: Props): JSX.Element {
                                     rating={movie.rating}
                                 />
                             ))}
-                        </Container>
+                        </CardsContainer>
                     </motion.div>
                 ) : null}
-            </Header>
-        </>
+            </Container>
     );
 }

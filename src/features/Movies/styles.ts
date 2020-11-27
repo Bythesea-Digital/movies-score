@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const CardsContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -11,12 +11,14 @@ type HeaderType = {
   haveMovies: boolean;
 };
 
-export const Header = styled.header<HeaderType>`
-  background: #102a43;
-  padding: 56px;
+export const Container = styled.header<HeaderType>`
+  //background: #102a43;
+  //background-color: #8EC5FC;
+transition: all 0.50s linear;
+background-image: ${({ theme }) => theme.background };
+  padding: 80px;
   text-align: center;
   min-height: 100vh;
-  transition: all ease-in-out 0.2s;
   .app-version {
     border-radius: 15px;
     background: white;
@@ -24,8 +26,8 @@ export const Header = styled.header<HeaderType>`
     padding: 2px 8px;
   }
   .title {
-    margin-top: 16px;
     color: white;
+    margin-top: 16px;
     letter-spacing: 1px;
   }
   .subtitle {
