@@ -19,6 +19,7 @@ const useAudio = ({soundUrl}) => {
         return () => {
             audio.removeEventListener('ended', () => setPlaying(false))
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return [toggleSound] as const
