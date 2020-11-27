@@ -13,7 +13,7 @@ type Props = {
 }
 
 function Header({ setTheme, isDarkMode}: Props): JSX.Element {
-    const [playing, toggleSound] = useAudio({soundUrl: require('../../assets/sounds/switch.mp3')});
+    const [toggleSound] = useAudio({soundUrl: require('../../assets/sounds/switch.mp3')});
 
     const toggleDarkMode = () => {
         toggleSound()
